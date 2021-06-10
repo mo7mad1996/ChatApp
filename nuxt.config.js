@@ -10,4 +10,5 @@ module.exports = {
     WS_URL: process.env.WS_URL || "http://localhost:3000",
   },
   css: ["~/assets/reset.css"],
+  telemetry: false,
 };
