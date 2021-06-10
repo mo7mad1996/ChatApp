@@ -6,7 +6,7 @@
     "dev": "nodemon -w server.js -w nuxt.config.js server.js",
     "build": "nuxt build",
     "generate": "nuxt generate",
-    "start": "NODE_ENV=production node server.js",
+    "start": "SET NODE_ENV=production && node server",
     "post-update": "yarn upgrade --latest"
   },
   "dependencies": {
