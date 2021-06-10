@@ -13,8 +13,6 @@
   // vuex
   import { mapGetters } from "vuex";
 
-  import socket from "~/plugins/socket.io.js";
-
   export default {
     components: {
       Login,
@@ -22,6 +20,12 @@
     },
     head: {
       title: "Nuxt.js with Socket.io",
+      link: [
+        {
+          rel: "stylesheet",
+          href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css",
+        },
+      ],
     },
     computed: {
       ...mapGetters(["user"]),

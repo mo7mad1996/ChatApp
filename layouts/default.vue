@@ -47,7 +47,8 @@
   .layout {
     height: 100vh;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   header {
@@ -62,7 +63,7 @@
     margin: 0 0 0 10px;
   }
   .content {
-    height: 100%;
+    flex: 1;
     padding: 10px;
     border-radius: 5px;
   }

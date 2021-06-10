@@ -36,8 +36,18 @@ io.on("connection", (socket) => {
     io.emit("calc users", users);
   });
 
+  socket.on("disconnect", () => {
+    users--;
+    io.emit("calc users", users);
+  });
   socket.on("logout", () => {
     users--;
     io.emit("calc users", users);
+  });
+
+  // send msg
+  socket.on("sendSms", (obj) => {
+    messages.push(obj);
+    io.emit("updateMsg", messages);
   });
 });
