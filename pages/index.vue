@@ -8,8 +8,8 @@
 import { mapGetters } from "vuex";
 
 // components
-import ChatContent from "~/components/ChatContent/index";
-import Login from "~/components/Login/index";
+import ChatContent from "@/components/ChatContent/index";
+import Login from "@/components/Login/index";
 
 export default {
   computed: mapGetters(["user"]),
