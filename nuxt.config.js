@@ -5,6 +5,10 @@ module.exports = {
   /*
    ** Headers of the page
    */
+
+  server: {
+    host: "0" // default: localhost
+  },
   head: {
     title: "chat app",
     meta: [
