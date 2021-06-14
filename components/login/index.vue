@@ -1,49 +1,64 @@
 <template>
-  <div class="land">
+  <main>
     <div>
       <h2>Many people want to meet you!</h2>
-      <button @click="start">Start Chat</button>
+      <button @click="signin">Start Chat</button>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
-  import socket from "~/plugins/socket.io.js";
-  import { mapActions } from "vuex";
+// vuex
+import { mapActions } from "vuex";
 
-  export default {
-    methods: {
-      ...mapActions(["login"]),
-      start() {
-        this.login();
-        socket.emit("start");
-      },
-    },
-  };
+export default {
+  name: "Login",
+  data() {
+    return {
+      user: {
+        id: Math.floor(Math.random() * 1000),
+        active: true
+      }
+    };
+  },
+  mounted() {
+    this.$socket.on("updateUsers", users => {
+      console.log("component");
+      this.updateUsers(users);
+    });
+  },
+  methods: {
+    ...mapActions(["updateUsers", "setUser"]),
+    signin() {
+      this.setUser(this.user);
+      this.$socket.emit("signin", this.user);
+    }
+  }
+};
 </script>
 
 <style scoped>
-  .land {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  button {
-    color: white;
-    background: #28a745;
-    padding: 7px 12px;
-    border-radius: 5px;
-    border: none;
-    margin: 2em auto;
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  button:hover {
-    filter: brightness(80%);
-  }
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+div {
+  text-align: center;
+}
+button {
+  color: white;
+  background: #28a745;
+  padding: 7px 12px;
+  border-radius: 5px;
+  border: none;
+  margin: 2em auto;
+  font-size: 20px;
+  cursor: pointer;
+}
+button:hover {
+  filter: brightness(80%);
+}
 </style>

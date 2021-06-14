@@ -1,26 +1,25 @@
 {
-  "name": "simple-chat-app",
+  "name": "chat-nuxt",
   "version": "1.0.0",
+  "description": "My world-class Nuxt.js project",
+  "author": "Vladilen",
   "private": true,
   "scripts": {
-    "dev": "nodemon -w server.js -w nuxt.config.js server.js",
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
     "build": "nuxt build",
     "generate": "nuxt generate",
-    "start": "SET NODE_ENV=production && node server",
-    "post-update": "yarn upgrade --latest"
+    "start": "cross-env NODE_ENV=production node server/index.js"
   },
   "dependencies": {
-    "@nuxtjs/axios": "*",
-    "express": "*",
-    "nuxt": "*",
-    "socket.io": "*",
-    "socket.io-client": "*"
+    "@nuxtjs/pwa": "^2.6.0",
+    "cross-env": "^5.2.0",
+    "express": "^4.16.4",
+    "nuxt": "^2.4.0",
+    "socket.io": "^2.2.0",
+    "vue-socket.io": "^3.0.7"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "nodemon": "^1.11.0",
-    "prettier": "^2.2.1"
+    "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.18.9"
   }
 }

@@ -1,40 +1,28 @@
 <template>
-  <div id="app">
-    <Login v-if="!user" />
-    <Chat v-else />
-  </div>
+  <ChatContent v-if="user.id" />
+  <Login v-else />
 </template>
 
 <script>
-  // components
-  import Login from "~/components/login/index";
-  import Chat from "~/components/chatPage/index";
+// vuex
+import { mapGetters } from "vuex";
 
-  // vuex
-  import { mapGetters } from "vuex";
+// components
+import ChatContent from "~/components/ChatContent/index";
+import Login from "~/components/Login/index";
 
-  export default {
-    components: {
-      Login,
-      Chat,
-    },
-    head: {
-      title: "Nuxt.js with Socket.io",
-      link: [
-        {
-          rel: "stylesheet",
-          href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css",
-        },
-      ],
-    },
-    computed: {
-      ...mapGetters(["user"]),
-    },
-  };
+export default {
+  computed: mapGetters(["user"]),
+  components: {
+    ChatContent,
+    Login
+  }
+};
 </script>
 
 <style scoped>
-  #app {
-    height: 100%;
-  }
+div {
+  font-family: Roboto, Times, serif;
+  height: 100%;
+}
 </style>

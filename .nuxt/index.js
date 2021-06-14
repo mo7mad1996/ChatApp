@@ -13,6 +13,8 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
+import nuxt_plugin_socket_412a8e67 from 'nuxt_plugin_socket_412a8e67' // Source: ..\\plugins\\socket (mode: 'client')
+
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
 
@@ -79,7 +81,7 @@ async function createApp(ssrContext, config = {}) {
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"}],"link":[],"style":[],"script":[]},
+    head: {"title":"chat app","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"mobile-web-app-capable","name":"mobile-web-app-capable","content":"yes"},{"hid":"apple-mobile-web-app-title","name":"apple-mobile-web-app-title","content":"chat-nuxt"},{"hid":"theme-color","name":"theme-color","content":"#fff"},{"hid":"og:type","name":"og:type","property":"og:type","content":"website"},{"hid":"og:title","name":"og:title","property":"og:title","content":"chat-nuxt"},{"hid":"og:site_name","name":"og:site_name","property":"og:site_name","content":"chat-nuxt"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","href":"https:\u002F\u002Fcdnjs.cloudflare.com\u002Fajax\u002Flibs\u002Ffont-awesome\u002F5.15.3\u002Fcss\u002Fall.min.css"},{"rel":"stylesheet","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:300,400,500,700|Material+Icons"},{"rel":"manifest","href":"\u002F_nuxt\u002Fmanifest.6aee4836.json"}],"style":[],"script":[],"htmlAttrs":{"lang":"en"}},
 
     store,
     router,
@@ -207,6 +209,10 @@ async function createApp(ssrContext, config = {}) {
     }
   }
   // Plugin execution
+
+  if (process.client && typeof nuxt_plugin_socket_412a8e67 === 'function') {
+    await nuxt_plugin_socket_412a8e67(app.context, inject)
+  }
 
   // Lock enablePreview in context
   if (process.static && process.client) {

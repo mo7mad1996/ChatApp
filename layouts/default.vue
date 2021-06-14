@@ -1,75 +1,66 @@
 <template>
   <div class="layout">
     <header>
-      <span>Chat! </span>
-      <span>Online: {{ usersCount }}</span>
-
-      <button @click="logout" v-if="user">Logout</button>
+      <span>Chat!</span>
+      <span>Online: {{ users.filter(u => u.active).length }}</span>
+      <button v-if="user.id" @click="out">Logout</button>
     </header>
-    <div class="content">
-      <Nuxt />
-    </div>
+    <main>
+      <nuxt />
+    </main>
   </div>
 </template>
 
 <script>
-  import socket from "~/plugins/socket.io.js";
-  import { mapGetters, mapActions } from "vuex";
+// vuex
+import { mapGetters, mapActions } from "vuex";
 
-  export default {
-    data() {
-      return {
-        usersCount: 0,
-      };
-    },
-    beforeMount() {
-      socket.on("calc users", (num) => {
-        this.usersCount = num;
-      });
-    },
-    mounted() {
-      socket.emit("getUsers");
-    },
-    computed: {
-      ...mapGetters(["user"]),
-    },
-    methods: {
-      ...mapActions(["out"]),
-      logout() {
-        this.out();
-        socket.emit("logout");
-      },
-    },
-  };
+export default {
+  computed: mapGetters(["users", "user"]),
+  mounted() {
+    if (typeof JSON.parse(sessionStorage.getItem("user")) == "Object") {
+      this.setUser(JSON.parse(sessionStorage.getItem("user")));
+    }
+  },
+  methods: {
+    ...mapActions(["setUser", "dropUser"]),
+    out() {
+      this.$socket.emit("out", this.user);
+      this.dropUser();
+    }
+  }
+};
 </script>
 
 <style scoped>
-  .layout {
-    height: 100vh;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    flex-direction: column;
-  }
+.layout {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  font-family: Roboto, Times, serif;
+  overflow: hidden;
+}
 
-  header {
-    background: #343a40;
-    color: white;
-  }
+header {
+  background: #343a40;
+  padding: 0 5%;
+  color: white;
+}
+header button,
+header span {
+  padding: 10px;
+  margin-right: 10px;
+  display: inline-block;
+}
 
-  button,
-  header span {
-    display: inline-block;
-    padding: 10px;
-    margin: 0 0 0 10px;
-  }
-  .content {
-    flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  button {
-    color: #333;
-    padding: 5px 12px;
-    cursor: pointer;
-  }
+header button {
+  color: #333;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+main {
+  flex: 1;
+  height: 100%;
+}
 </style>
