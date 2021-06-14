@@ -1,7 +1,7 @@
 module.exports = {
   // mode: "universal",
   telemetry: false,
-
+  target: "static",
   /*
    ** Headers of the page
    */
